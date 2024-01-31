@@ -1,6 +1,8 @@
 const express = require('express')
 const facts = require('./facts.json');
 const app = express()
+const API_KEY = 'live_t87MBM8EPnWlx4hQGrm8pDWeXiqTGHbs25pH1ohziaFahbXpKsqOOaBYSEpYZhBm'
+const url = `https://api.thecatapi.com/v1/images/search?limit=2`
 
 const PORT = process.env.PORT || "3000"
 
@@ -16,7 +18,6 @@ app.get("/", (req, res) => {
 
 })
 
-// http://localhost:3000/greet?name=kaylee&dob=2002
 app.get('/greet', (req, res)=> {
     const name = req.query.name;
     const age1 = 2024 - req.query.year - 1;
@@ -56,7 +57,7 @@ app.get('/pandorasbox', (req, res)=> {
 
     let joke = {}
 
-    if(random < 0.5){
+    if(random < 0.3){
         fetch('https://icanhazdadjoke.com/', {
             headers: {
                 "Accept" : "application/json"
@@ -65,12 +66,24 @@ app.get('/pandorasbox', (req, res)=> {
             .then(res => res.json())
             .then(data => {
                 joke = data.joke
-                res.render('pandorasbox', {title: "Pandora's Box", message: `joke: ${joke}`} )});
+                res.render('pandorasbox', {title: "Pandora's Box", message: `joke: ${joke}`, img: "#"} )});
+    }
+    else if (random >= 0.3 && random < 0.6){
+        fetch(url, {
+            headers: {
+                'x-api-key' : API_KEY
+            }
+        })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data)
+                picture = data[0].url
+                res.render('pandorasbox', {title: "Pandora's Box", message: `picture`, img: picture} )});
     }
     else{
         const factListLength = facts.length;
         const fact = facts[Math.floor((Math.random() * factListLength))].fact;
-        res.render('pandorasbox', {title: "Pandora's Box", message: `fact: ${fact}`} )
+        res.render('pandorasbox', {title: "Pandora's Box", message: `fact: ${fact}`, img: "#"} )
     }
 
 
