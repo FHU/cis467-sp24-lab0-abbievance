@@ -18,8 +18,10 @@ app.get("/", (req, res) => {
 
 // http://localhost:3000/greet?name=kaylee&dob=2002
 app.get('/greet', (req, res)=> {
-    console.log(req.query)
-    res.send(`Hello, ${req.query.name}! \n You are, ${2024 - req.query.year - 1} or ${2024 - req.query.year} years old.`)
+    const name = req.query.name;
+    const age1 = 2024 - req.query.year - 1;
+    const age2 = 2024 - req.query.year;
+    res.render('Greet', {title: "Greet", name, age1, age2} )
 })
 
 app.get('/math/:num1/:op/:num2', (req, res)=> {
@@ -45,18 +47,31 @@ app.get('/math/:num1/:op/:num2', (req, res)=> {
             break;
     }
 
-    res.send(`${result}`);
+    res.render('math', {title: "Math", result} )
 })
 
 app.get('/pandorasbox', (req, res)=> {
 
-    // do the work
-    //const message = "DAD JOKE"
+    let random = Math.random();
 
-    const factListLength = facts.length;
+    let joke = {}
 
-    const fact4 = facts[Math.floor((Math.random() * factListLength))].fact;
+    if(random < 0.5){
+        fetch('https://icanhazdadjoke.com/', {
+            headers: {
+                "Accept" : "application/json"
+            }
+        })
+            .then(res => res.json())
+            .then(data => {
+                joke = data.joke
+                res.render('pandorasbox', {title: "Pandora's Box", message: `joke: ${joke}`} )});
+    }
+    else{
+        const factListLength = facts.length;
+        const fact = facts[Math.floor((Math.random() * factListLength))].fact;
+        res.render('pandorasbox', {title: "Pandora's Box", message: `fact: ${fact}`} )
+    }
 
-    res.render('pandorasbox', {title: "Pandora's Box", message: fact4} )
 
 })
