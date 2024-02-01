@@ -12,9 +12,11 @@ app.listen(PORT, ()=> {
     console.log( `App is running on http://localhost:${PORT}...`)
 })
 
+app.use(express.static('public'));
+
 app.get("/", (req, res) => {
 
-    res.send("Good Job!")
+    res.render('index', {title: "Home"} )
 
 })
 
