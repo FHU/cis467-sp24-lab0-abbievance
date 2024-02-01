@@ -4,10 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lab 0 | <%= title %></title>
+    <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+    integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+    crossorigin="anonymous"
+  />
 </head>
-<body>
-    <h1><%= title %></h1>  
+<body class="bg-dark d-flex flex-column align-items-center justify-content-center my-5">
+    <h1 class="text-light display-1"><%= title %></h1>  
 
-    <p>Hello <%= name %>! You are <%= age1 %> or <%= age2 %> years old.</p>
+    <h3 class="text-light my-3">Hello <%= name %>! You are <%= age1 %> or <%= age2 %> years old.</h3>
 </body>
 </html>

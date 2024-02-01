@@ -1,8 +1,6 @@
 const express = require('express')
 const facts = require('./facts.json');
 const app = express()
-const API_KEY = 'live_t87MBM8EPnWlx4hQGrm8pDWeXiqTGHbs25pH1ohziaFahbXpKsqOOaBYSEpYZhBm'
-const url = `https://api.thecatapi.com/v1/images/search?limit=2`
 
 const PORT = process.env.PORT || "3000"
 
@@ -71,16 +69,12 @@ app.get('/pandorasbox', (req, res)=> {
                 res.render('pandorasbox', {title: "Pandora's Box", message: `joke: ${joke}`, img: "#"} )});
     }
     else if (random >= 0.3 && random < 0.6){
-        fetch(url, {
-            headers: {
-                'x-api-key' : API_KEY
-            }
+        fetch('https://picsum.photos/v2/list?page=2&limit=100', {
+
         })
             .then(res => res.json())
             .then(data => {
-                console.log(data)
-                picture = data[0].url
-                res.render('pandorasbox', {title: "Pandora's Box", message: `picture`, img: picture} )});
+                res.render('pandorasbox', {title: "Pandora's Box", message: `picture (it might take a while to load)`, img: data[Math.floor((Math.random() * data.length))].download_url} )});
     }
     else{
         const factListLength = facts.length;
