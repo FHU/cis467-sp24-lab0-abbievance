@@ -22,7 +22,7 @@ app.get('/greet', (req, res)=> {
     const name = req.query.name;
     const age1 = 2024 - req.query.year - 1;
     const age2 = 2024 - req.query.year;
-    res.render('Greet', {title: "Greet", name, age1, age2} )
+    res.render('greet', {title: "Greet", name, age1, age2} )
 })
 
 app.get('/math/:num1/:op/:num2', (req, res)=> {
